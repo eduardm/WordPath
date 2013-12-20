@@ -15,10 +15,10 @@ class WordPath
   private
   def find_solution()
     @queue.push(TTreeWithParent.new(@start_word))
-    while (!@queue.empty?) do
+    while (!@queue.empty? && !@solution) do
       build_children(@queue.pull)
     end
-    puts "No path found"
+    puts "No path found" unless @solution
   end
 
 
@@ -29,6 +29,7 @@ class WordPath
       if new_node.value == @end_word
         @solution = new_node
         display_solution
+        break
       else
         @queue.push(new_node)
       end
@@ -64,7 +65,6 @@ class TTreeWithParent
   def initialize(value, parent=nil)
     @value = value
     @parent = parent
-    @children = []
   end
 
   def to_s
@@ -98,6 +98,7 @@ class AQueue < Array
     self.delete_at(0)
   end
 
+
 end
 
-#WordPath.new("ruby", "code")
+WordPath.new("ruby", "code")
